@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class BOJ2671 {
+public class BOJ1013 {
 
 	static int N;
 	public static void main(String[] args) throws IOException{
@@ -20,8 +20,6 @@ public class BOJ2671 {
 				System.out.println("YES");
 			else System.out.println("NO");
 		}
-		
-
 	}
 
 }
