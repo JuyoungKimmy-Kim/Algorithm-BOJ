@@ -3,6 +3,8 @@ package bfs.dfs;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ2573 {
@@ -22,11 +24,11 @@ public class BOJ2573 {
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in));
 		StringTokenizer st=new StringTokenizer (br.readLine());
 		
-		N=Integer.parseInt(br.readLine());
-		M=Integer.parseInt(br.readLine());
+		N=Integer.parseInt(st.nextToken());
+		M=Integer.parseInt(st.nextToken());
 		
-		map=new int[N][N];
-		melt=new int[N][N];
+		map=new int[N][M];
+		melt=new int[N][M];
 		
 		for (int i=0; i<N; i++) {
 			st=new StringTokenizer (br.readLine());
@@ -36,20 +38,110 @@ public class BOJ2573 {
 				if (map[i][j]>0) ice_cnt++;
 			}
 		}
+		
+		int Time=1;
+		while (true) {
+			meltIce ();
+			
+			print();
+			
+			if (ice_cnt==0) {
+				System.out.println("0");
+				break;
+			}
+			
+			if (!check()) {
+				System.out.println(Time);
+				break;
+			}
+			
+			Time++;
+					
+		}
 
 	}
 	
+	private static boolean check () {
+		
+		boolean[][] visited=new boolean[N][M];
+		Queue <Pair>q=new ArrayDeque<>();
+		int cnt=1;
+		
+		for (int i=0; i<N; i++) {
+			for (int j=0; j<M; j++) {
+				if (map[i][j]!=SEA) {
+					
+					visited[i][j]=true;
+					q.add(new Pair (i,j));
+					
+					while (!q.isEmpty()) {
+						Pair cur=q.poll();
+						int y=cur.y;
+						int x=cur.x;
+						
+						for (int d=0; d<4; d++) {
+							int ny=y+dy[d];
+							int nx=x+dx[d];
+							
+							if (ny<0 || nx<0 || ny>=N || nx>=M) continue;
+							if (map[ny][nx]!=SEA && !visited[ny][nx]) {
+								visited[ny][nx]=true;
+								q.add(new Pair (ny, nx));
+								cnt++;
+							}
+							
+						}
+					}
+					
+					System.out.println(cnt+ " "+ice_cnt);
+					if (cnt==ice_cnt) return true;
+					else return false;
+						
+				}
+			}
+		}
+		return false;
+	}
+	
 	private static void meltIce () {
-		for (int i=0; i<M; i++) {
-			for (int j=0; j<N; j++) {
+		for (int i=0; i<N; i++) {
+			for (int j=0; j<M; j++) {
+				
 				if (map[i][j]>0) {
+					int near_sea=0;
 					
 					for (int d=0; d<4; d++) {
 						int ny=i+dy[d];
 						int nx=j+dx[d];
+						
+						if (ny<0 || nx<0 || ny>=N || nx>=M) continue;
+						if (map[ny][nx]==SEA) near_sea++;
 					}
+					
+					melt [i][j]=near_sea;
 				}
 			}
+		}
+		
+		for (int i=0; i<N; i++) {
+			for (int j=0; j<M; j++) {
+				map[i][j]-=melt[i][j];
+				
+				if (melt[i][j]>0 && map[i][j]<=0) {
+					melt[i][j]=0;
+					map[i][j]=0;
+					ice_cnt--;
+				}
+			}
+		}
+	}
+	
+	private static void print () {
+		for (int i=0; i<N; i++) {
+			for (int j=0; j<M; j++) {
+				System.out.print(map[i][j]+" ");
+			}
+			System.out.println();
 		}
 	}
 
