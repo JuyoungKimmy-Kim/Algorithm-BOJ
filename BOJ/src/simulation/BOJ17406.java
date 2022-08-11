@@ -60,7 +60,7 @@ public class BOJ17406 {
 			rcs.add(new RCS (r,c,s));	
 		}
 		dfs(0);
-		
+
 		System.out.println(minSum);
 
 	}
@@ -70,26 +70,17 @@ public class BOJ17406 {
 			
 			copy (tmp_array, array);
 			
-			for (int i=0; i<K; i++) {
+			for (int i=0; i<K; i++) 
 				rotate (order[i]);
-				
-				//print();
-				
-			}
+
 			for (int i=1; i<=N; i++) {
 				int sum=0;
 				for (int j=1; j<=M; j++ )
 					sum+=array[i][j];
 				if (sum<minSum) minSum=sum;
 			}
-			
-			//print();
-			
 			copy (array, tmp_array);
-			
-			//print();
-			
-			
+					
 			return ;
 		}
 		
@@ -110,7 +101,6 @@ public class BOJ17406 {
 	
 	private static void rotate (int idx) {
 
-
 		int r=rcs.get(idx).r;
 		int c=rcs.get(idx).c;
 		int s=rcs.get(idx).s;
@@ -121,47 +111,28 @@ public class BOJ17406 {
 		while (true) {
 			
 			if (ey-sy<1 || ex-sx<1) return ;
-			
-			//아래에서 위로
 
-			
 			int tmp=array[sy][sx];
 			
 			for (int y=sy+1; y<=ey; y++)
 				array[y-1][sx]=array[y][sx];
-			
-			//print();
-			
-
-			
+				
 			for (int x=sx+1; x<=ex; x++)
 				array[ey][x-1]=array[ey][x];
-			
-			//print();
-			
-
 			
 			for (int y=ey-1; y>=sy; y--)
 				array[y+1][ex]=array[y][ex];
 			
-	
-			
-			//왼쪽에서 오른쪽으로
 			for (int x=ex-1; x>=sx; x--)
 				array[sy][x+1]=array[sy][x];
-			
-
-			
+				
 			array[sy][sx+1]=tmp;
-			
-
-			
+						
 			sy+=1; sx+=1;
 			ey-=1; ex-=1;
 		}
 			
 	}
-	
 	
 	//a에 b복사
 	private static void copy (int[][] a, int [][]b) {

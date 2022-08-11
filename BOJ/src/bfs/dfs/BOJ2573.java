@@ -43,8 +43,7 @@ public class BOJ2573 {
 		while (true) {
 			meltIce ();
 			
-			print();
-			
+			// 얼음이 다 녹을 때까지 분리되지 않은 경우
 			if (ice_cnt==0) {
 				System.out.println("0");
 				break;
@@ -54,11 +53,8 @@ public class BOJ2573 {
 				System.out.println(Time);
 				break;
 			}
-			
-			Time++;
-					
+			Time++;					
 		}
-
 	}
 	
 	private static boolean check () {
@@ -69,6 +65,8 @@ public class BOJ2573 {
 		
 		for (int i=0; i<N; i++) {
 			for (int j=0; j<M; j++) {
+				
+				// 빙산을 찾았을 때 이와 인접한 빙산의 개수를 센다
 				if (map[i][j]!=SEA) {
 					
 					visited[i][j]=true;
@@ -91,9 +89,9 @@ public class BOJ2573 {
 							}
 							
 						}
-					}
+					}		
 					
-					System.out.println(cnt+ " "+ice_cnt);
+					// 위에서 구한 빙산의 개수와 원래 빙산의 개수가 동일하면 true, 아니면 false
 					if (cnt==ice_cnt) return true;
 					else return false;
 						
@@ -102,6 +100,13 @@ public class BOJ2573 {
 		}
 		return false;
 	}
+	
+	/*
+	 *  빙산과 인접한 바다 개수를 melt[][]에 저장하고
+	 *  개수 탐색이 끝나면 빙산을 녹인다
+	 *  
+	 *  이때 빙산이 다 녹으면 ice_cnt를 줄여주어 빙산이 사라졌음을 표시
+	 */
 	
 	private static void meltIce () {
 		for (int i=0; i<N; i++) {

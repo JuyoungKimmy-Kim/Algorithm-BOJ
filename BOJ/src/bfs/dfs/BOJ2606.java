@@ -1,5 +1,11 @@
 package bfs.dfs;
 
+/*
+ * 처음에 단방향 인접 리스트로 만들었다가
+ * 2-1로 연결된 경우 바이러스에 걸리게 되는 컴퓨터의 수가 1개 임에도 체크를 하지 못 함
+ *
+ * 시간 복잡도 : O(N)
+ */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,9 +39,9 @@ public class BOJ2606 {
 			int to=Integer.parseInt(st.nextToken());
 			
 			adj[from].add(to);
-			adj[to].add(from);
+			adj[to].add(from);	// 양방향 리스트 생성
 		}
-		checked[1]=true;
+		checked[1]=true; 
 		find(1);
 		System.out.println(ret);
 		
