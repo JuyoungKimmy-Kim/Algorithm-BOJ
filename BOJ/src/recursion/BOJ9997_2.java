@@ -6,40 +6,36 @@ import java.io.InputStreamReader;
 
 public class BOJ9997_2 {
 	
-	static int N;
-	static int ret;
-	static int[] words; // 각 단어의 비트마스크가 들어있는 배열
+	static int N,ans;
+	static int[] words;
 	
-	static final int ALPHA = (1<<26)-1;
-	// 0000 0011 1111 1111 1111 1111 1111 1111
-	// 모든 알파벳을 사용했을 경우 비트마스크
+	static int ALPA= (1<<26)-1;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in));
 		N=Integer.parseInt(br.readLine());
 		words=new int[N];
-
 		
-		for (int i=0; i<N; i++) { 
-			String str=br.readLine();
+		for (int i=0; i<N; i++) {
+			String word=br.readLine();
 			
-			for (int j=0; j<str.length(); j++) {
-				words[i] |= 1<<str.charAt(j)-'a';
-			}
+			for (int j=0; j<word.length(); j++)
+				words[i] |= 1<<(word.charAt(j)-'a');
 		}
 		
-		dfs (-1, 0);
-		System.out.println(ret);
+		comb (0,0);
+		System.out.println(ans);
 	}
 	
-	private static void dfs (int idx, int mask) {
-		if (idx==N-1) {
-			if (mask==ALPHA) 
-				ret ++;
+	private static void comb (int idx,  int mask) {
+		if (idx==N) {
+			if (ALPA == mask) 
+				ans++;
 			return ;
 		}
 		
-		dfs (idx+1, mask | words[idx+1]);
-		dfs (idx+1, mask);
+		comb (idx+1, mask | words[idx]);	//선택하는 경우
+		comb (idx+1, mask); 				//선택하지 않는 경우
+		
 	}
 }
