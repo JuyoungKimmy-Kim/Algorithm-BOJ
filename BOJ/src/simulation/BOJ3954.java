@@ -10,11 +10,7 @@ import java.util.StringTokenizer;
 public class BOJ3954 {
 	
 	static final int MAX= (int) (5*1e7);
-	//static final int MAX=50_000_000;
-	
 	static final int DATA_MAX=(int)(1e5+100);
-	//static final int DATA_MAX=100_000+100;
-	
 	static final int MOD=256;
 	
 	// sm: 배열 크기, sc: 프로그램 코드 크기, si: 입력 크기
@@ -52,14 +48,14 @@ public class BOJ3954 {
 				else if (program.charAt(i)==']') {
 					int j=stack.pop();
 					map.put(j, i);
-					map.put(j, i);
+					map.put(i, j);
 				}
 			}
 			
 			int idx=0;
 			int programIdx=0;
 			int inputIdx=0;
-			int loopStartIdx=0;
+			int loopStartIdx=Integer.MAX_VALUE;
 			boolean isTerminated=true;
 			
 			int[] datas = new int[DATA_MAX];
@@ -69,20 +65,30 @@ public class BOJ3954 {
 				char c=program.charAt(i);
 				
 				switch (c) {
+				
+				//포인터가 가리키는 수를 1감소
 				case '-': datas[idx]=(datas[idx]+MOD-1)%MOD;
 					break;
+				//포인터가 가리키는 수를 1증가
 				case '+': datas[idx]=(datas[idx]+1)%MOD;
 					break;
+				//포인터를 왼쪽으로 한 칸 움직임
 				case '<': idx= (idx+sm-1) % sm;
 					break;
+				//포인터를 오른쪽으로 한 칸 움직임
 				case '>': idx= (idx+1)%sm;
 					break;
-				case '[': if (datas[idx]==0) programIdx=map.get(idx);
-	
-				case ']': if (datas[idx]!=0) programIdx=map.get(idx);
+				//만약 포인터가 가리키는 수가 0이라면 [와 짝을 이루는 ] 다음 명령으로 점프
+				case '[': if (datas[idx]==0) i=map.get(i);
 					break;
+				//만약 포인터가 가리키는 수가 0이 아니라면 ]와 짝을 이루는 [의 다음 명령으로 점프
+				case ']': if (datas[idx]!=0) i=map.get(i);
+					break;
+				//포인터가 가리키는 수를 출력
 				case '.': //System.out.println(datas[idx]);
 					break;
+				//문자 하나를 읽고 포인터가 가리키는 곳에 저장
+				//입력의 마지막인 경우 255저장
 				case ',' : datas[idx]= (inputIdx==si) ? MOD-1 : (int)input.charAt(inputIdx++);
 					break;	
 				}
