@@ -9,8 +9,8 @@ public class BOJ17281 {
 
 	static int N, ans;
 	static int[][] score;
-	static int[] order=new int[9];
-	static boolean[] selected=new boolean[9];
+	static int[] order=new int[9];				//타순 저장
+	static boolean[] selected=new boolean[9];	//이미 뽑았는지?
 	
 	public static void main(String[] args) throws IOException{
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in)); 
@@ -40,8 +40,9 @@ public class BOJ17281 {
 			return ;
 		}
 		
-		for (int i=0; i<9; i++) {
+		for (int i=1; i<9; i++) {
 			
+			// 4번 타자 자리는 이미 정해져 있으므로 다음 위치 탐색
 			if (idx==3) {
 				perm(idx+1);
 				continue;
@@ -76,10 +77,7 @@ public class BOJ17281 {
 	}
 	
 	private static void play () {
-		
-//		for (int n : order)
-//			System.out.print(n+" ");
-//		System.out.println();
+
 		
 		int count=0;
 		int no=0;
@@ -107,9 +105,6 @@ public class BOJ17281 {
 				if (out==3) break;
 			}
 		}
-		
-		//System.out.println(count);
-		
 		if (count>ans) ans=count;
 	}
 }

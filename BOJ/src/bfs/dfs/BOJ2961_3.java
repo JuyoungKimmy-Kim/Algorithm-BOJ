@@ -9,7 +9,7 @@ public class BOJ2961_3 {
 
 	static int N;
 	static int[][] src;
-	static int min;
+	static int min=Integer.MAX_VALUE;
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -26,7 +26,10 @@ public class BOJ2961_3 {
 		int count= 1<<N; //0 0 0 1 0 0 0 0
 		
 		//i==0 -> 0 0 0 0 0 0 0 0
+		//i==1 -> 0 0 0 0 0 0 0 1
+		//i==2 -> 0 0 0 0 0 0 1 0
 		//i==3 -> 0 0 0 0 0 0 1 1
+		//i==4 -> 0 0 0 0 0 1 0 0 
 		
 		for (int i=1; i<count; i++) { //재료는 한 가지 이상 선택
 			// 각각 부분 집합에서 어떤 원소가 선택/비선택 -> i가 select 역할
@@ -38,12 +41,13 @@ public class BOJ2961_3 {
 				if ((i & 1<<j)!=0) {
 					sin*=src[j][0];
 					ssn+=src[j][1];
+					
+					System.out.print(j+" ");
 				}
 			}
-			min=Math.max(min, Math.abs(sin-ssn));
+			System.out.println();
+			min=Math.min(min, Math.abs(sin-ssn));
 		}	
 		System.out.println(min);	
 	}
-
-
 }

@@ -36,8 +36,8 @@ public class BOJ2961 {
 			return ;
 		}
 		
-		dfs (idx+1, S*taste[idx][0], B+taste[idx][1]);
-		dfs (idx+1, S, B);
+		dfs (idx+1, S*taste[idx][0], B+taste[idx][1]); //선택한 경우
+		dfs (idx+1, S, B);	 //선택하지 않은 경우
 		
 	}
 
