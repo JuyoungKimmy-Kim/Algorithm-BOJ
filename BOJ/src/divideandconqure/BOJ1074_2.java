@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BOJ1074 {
+public class BOJ1074_2 {
 
 	static int N,r,c,ans;
 
@@ -17,30 +17,34 @@ public class BOJ1074 {
 		r=Integer.parseInt(st.nextToken());
 		c=Integer.parseInt(st.nextToken());
 		
+		int y=0, x=0;
 		N=1<<N;
-		recursion (0,0);
+		
+		while (N>1) {
+			N/=2;
+			
+			//r,c가 4공간 중 어느 곳에 해당하는 지 판단, 각 공간에서 r,c 값에 따라 ans 값 갱신, 원점 보정
+			
+			if (r<y+N && c<x+N) { //top-left 
+				;
+			}
+			else if (r<y+N && c>=x+N) { // top-right
+				ans+=N*N*1;
+				x+=N; 
+			}
+			else if (r>=y+N && c<x+N) { //bottom-left
+				ans+=N*N*2;
+				y+=N;
+			}
+			else  { //bottome-right
+				ans+=N*N*3;
+				y+=N;
+				x+=N;
+			}
+		}
+		
 		System.out.println(ans);
 	}
 	
-	private static void recursion (int y, int x) { //y와 x는 원점
-		
-		if (N==1) return ;
-		N/=2;
-		
-		if (r<y+N && c<x+N) { //top-left 
-			recursion(y,x);
-		}
-		else if (r<y+N && c>=x+N) { // top-right
-			ans+=N*N*1;
-			recursion (y,x+N);
-		}
-		else if (r>=y+N && c<x+N) { //bottom-left
-			ans+=N*N*2;
-			recursion (y+N, x);
-		}
-		else  { //bottome-right
-			ans+=N*N*3;
-			recursion (y+N, x+N);
-		}
-	}
+
 }
