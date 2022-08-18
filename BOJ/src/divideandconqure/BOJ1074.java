@@ -18,29 +18,30 @@ public class BOJ1074 {
 		c=Integer.parseInt(st.nextToken());
 		
 		N=1<<N;
-		recursion (0,0);
+		z(0,0);
+		
 		System.out.println(ans);
 	}
 	
-	private static void recursion (int y, int x) { //y와 x는 원점
+	private static void z (int y, int x) {
 		
-		if (N==1) return ;
+		if (N==1) return;
 		N/=2;
 		
-		if (r<y+N && c<x+N) { //top-left 
-			recursion(y,x);
+		if (r<y+N && c<x+N) {
+			z(y,x);
 		}
-		else if (r<y+N && c>=x+N) { // top-right
+		else if (r<y+N && c>=x+N ) {
 			ans+=N*N*1;
-			recursion (y,x+N);
+			z(y,x+N);
 		}
-		else if (r>=y+N && c<x+N) { //bottom-left
+		else if (r>=y+N && c<x+N) {
 			ans+=N*N*2;
-			recursion (y+N, x);
+			z(y+N, x);
 		}
-		else  { //bottome-right
+		else if (r>=y+N && c>=x+N) {
 			ans+=N*N*3;
-			recursion (y+N, x+N);
+			z(y+N, x+N);
 		}
 	}
 }
