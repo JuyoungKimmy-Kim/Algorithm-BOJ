@@ -5,16 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class BOJ1260 {
+public class BOJ1260_3 {
 
 	static int N,M,V;
-	static List<Integer> adj[];
+	static ArrayList<ArrayList<Integer>> adj=new ArrayList<ArrayList<Integer>> ();
 	static boolean[] visited;
 	
 	static StringBuilder sb1=new StringBuilder ();
@@ -27,10 +25,9 @@ public class BOJ1260 {
 		N=Integer.parseInt(st.nextToken());
 		M=Integer.parseInt(st.nextToken());
 		V=Integer.parseInt(st.nextToken());
-		
-		adj=new ArrayList [N+1];
+
 		for (int i=0; i<=N; i++)
-			adj[i]=new ArrayList<>();
+			adj.add(new ArrayList<Integer>());
 		
 		visited=new boolean[N+1];
 		
@@ -39,12 +36,11 @@ public class BOJ1260 {
 			int from=Integer.parseInt(st.nextToken());
 			int to=Integer.parseInt(st.nextToken());
 			
-			adj[from].add(to);
-			adj[to].add(from);
+			adj.get(from).add(to);
 		}
 		
 		for (int i=1; i<=N; i++)
-			Collections.sort(adj[i]);
+			Collections.sort(adj.get(i));
 		
 		dfs (V);
 		sb1.setCharAt (sb1.length()-1, '\n');
@@ -58,8 +54,8 @@ public class BOJ1260 {
 		visited[idx]=true;
 		sb1.append(idx).append(" ");
 		
-		for (int i=0; i<adj[idx].size(); i++) {
-			int next=adj[idx].get(i);
+		for (int i=0; i<adj.get(idx).size(); i++) {
+			int next=adj.get(idx).get(i);
 			
 			if (!visited[next]) {
 				dfs (next);
@@ -79,8 +75,8 @@ public class BOJ1260 {
 			int now=q.poll();
 			sb1.append(now).append(" ");
 			
-			for (int i=0 ;i<adj[now].size(); i++) {
-				int next=adj[now].get(i);
+			for (int i=0 ;i<adj.get(now).size(); i++) {
+				int next=adj.get(now).get(i);
 				
 				if (!visited[next]) {
 					visited[next]=true;
