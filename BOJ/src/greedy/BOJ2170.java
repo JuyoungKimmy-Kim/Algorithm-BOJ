@@ -52,4 +52,6 @@ public class BOJ2170 {
 		System.out.println(ans);
 	}
 
+	
+
 }

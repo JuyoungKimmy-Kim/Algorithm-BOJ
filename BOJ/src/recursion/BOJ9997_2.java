@@ -28,14 +28,14 @@ public class BOJ9997_2 {
 	}
 	
 	private static void comb (int idx,  int mask) {
+		
 		if (idx==N) {
-			if (ALPA == mask) 
-				ans++;
+			if (mask==ALPA) ans++;
 			return ;
 		}
 		
-		comb (idx+1, mask | words[idx]);	//선택하는 경우
-		comb (idx+1, mask); 				//선택하지 않는 경우
+		comb (idx+1, mask | words[idx]);
+		comb (idx+1, mask);
 		
 	}
 }

@@ -6,6 +6,12 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+/*
+ * 이거 왜 틀렸는지 모르겠음..
+ * 혹시 왜 틀렸는지 알려 줄 사람 찾아요..
+ * 
+ * 디버깅 하는 것도 너무 힘들고 해서 _2 에서는 예전에 풀었던 거 보고 다시 풀었음..
+ */
 public class BOJ17136 {
 
 	static int cnt;

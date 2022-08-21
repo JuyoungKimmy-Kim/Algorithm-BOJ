@@ -10,9 +10,7 @@ public class BOJ2531 {
 	static int N,D,K,C;
 	static int[] sushi;
 	static int[] kind;
-	static int maxCnt;
-	static int cnt;
-	static boolean couponsushi;
+	static int cnt, max;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in));
@@ -26,57 +24,34 @@ public class BOJ2531 {
 		sushi=new int[N+K];
 		kind=new int[D+1];
 		
-		for (int i=0; i<N; i++) {
+		for (int i=0; i<N; i++) 
 			sushi[i]=Integer.parseInt(br.readLine());
-			if (sushi[i]==C)
-				couponsushi=true;
+
+
+		for (int i=0; i<K; i++) {
+			if (kind[sushi[i]]==0) 
+				cnt++;
+			kind[sushi[i]]++;
 		}
-		if (couponsushi==false) cnt=1;
-			
-		eat();
-		System.out.println(maxCnt);
-
-	}
-	
-	static boolean check=false;
-	
-	public static void eat () {
-		for (int i=0; i<=N-K; i++) {
-						
-			if (i==0) {
-				for (int j=0; j<K; j++) {
-					kind[sushi[j]]++;
-
-					if (kind[sushi[j]]==1) cnt++;
-					if (sushi[j]==C) check=true;
-				}
-			}
-			else {
-				int prev=sushi[i-1];
-				kind[prev]--;
-				if (kind[prev]==0) cnt--;
-				if (kind[prev]==0 && prev==C) 
-					check=false;
-				
-				int next=sushi[i+K-1];
-				kind[next]++;
-				if (kind[next]==1) cnt++;
-				if (next==C) check=true;
-			}		
-			//next -> coupon or not
-
-			if (!couponsushi) {
-				maxCnt=Math.max(maxCnt, cnt);
+		
+		max=cnt;
+		
+		for (int i=1; i<N; i++) {
+			if (max<=cnt) {
+				if (kind[C]==0) 
+					max=cnt+1;
+				else
+					max=cnt;
 			}
 			
-			//쿠폰 사용했으므로 다음 꺼 확인 가능
-			else if (i+K<=N && check && kind[sushi[i+K]]==0) {	
-					maxCnt=Math.max(maxCnt, cnt+1);
-			}
-			else
-				maxCnt=Math.max(maxCnt, cnt);
-				
+			int end=(i+K-1)%N;
+			if (kind[sushi[end]]==0) cnt++;
+			kind[sushi[end]]++;
+			
+			kind[sushi[i-1]]--;
+			if (kind[sushi[i-1]]==0) cnt--;
 		}
+		
+		System.out.println(max);
 	}
-
 }
