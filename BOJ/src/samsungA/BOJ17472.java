@@ -3,10 +3,12 @@ package samsungA;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 class Bridge {
@@ -24,8 +26,8 @@ public class BOJ17472 {
 	static final int dy[]= {0,0,1,-1};
 	static final int dx[]= {1,-1,0,0};
 	
-	static int N, M, K=1;
-	static int ans;
+	static int N, M, K;
+	static int ans, cntAns=1;
 	static List<Bridge> brList=new ArrayList<>();
 	
 	static int[] parents;
@@ -53,6 +55,9 @@ public class BOJ17472 {
 		}
 		
 		solution();
+		
+		//print();
+		if (cntAns!=K) ans=-1;
 		System.out.println(ans);
 	}
 	
@@ -60,17 +65,16 @@ public class BOJ17472 {
 		
 		// #1. 각 섬에 numbering
 		for (int i=0; i<N; i++) {
-			for (int j=0; j<N; j++) {
+			for (int j=0; j<M; j++) {
 				if (map[i][j]!=0 && !visited[i][j]) {
-					dfs (i,j,K);
-					K++;
+					dfs (i,j,++K);
 				}
-
 			}
 		}
+		
 		parents=new int[K+1];
 		adj=new ArrayList [K+1];
-		for (int i=1; i<=K; i++)
+		for (int i=0; i<=K; i++)
 			adj[i]=new ArrayList<>();
 		
 		for (int i=1; i<=K; i++)
@@ -95,18 +99,10 @@ public class BOJ17472 {
 		// #3. mst 만들기
 		mst();
 		
-//		for (int i=0; i<brList.size(); i++) {
-//			int from=brList.get(i).from;
-//			int to=brList.get(i).to;
-//			int dist=brList.get(i).dist;
-//			
-//			System.out.print(from+"=>"+to+"="+dist);
-//			System.out.println();
-//		}
-		
-		// #4. 모든 섬이 연결되어 있는지 확인
-		
-		
+		// #4. 모든 섬이 연결되어 있는지 확인		
+		Arrays.fill(checked, false);
+		isConnected(1);
+		//if (!isConnected_()) ans=-1;
 	}
 	
 	static void dfs (int y, int x, int idx) {
@@ -141,6 +137,8 @@ public class BOJ17472 {
 			
 			int to=map[ny][nx]; 				//연결된 다른 섬의 번호
 			brList.add(new Bridge (from,to,cnt));
+			
+			
 		}
 	}
 	
@@ -153,6 +151,8 @@ public class BOJ17472 {
 		u=find(u);
 		v=find(v);
 		
+		
+		//adj에 담지만 실제로 adj는 아님!
 		if (u!=v) {
 			parents[u]=v;
 			adj[u].add(v);
@@ -172,22 +172,46 @@ public class BOJ17472 {
 			
 			if (union (u,v))
 				ans+=dist;
-			
-//			for (int j=1; j<=K; j++) {
-//				System.out.print(j+": ");
-//				
-//				for (int k : adj[j])
-//					System.out.print(k+" ");
-//				System.out.println();
-//			}
-//			System.out.println();
 		}
 	}
 	
-	static void isConnected () {
+	static void isConnected (int idx) {
 		
+		if (cntAns==K) return;
 		
+		checked[idx]=true;
+		
+		for (int i=0; i<adj[idx].size(); i++) {
+			int next=adj[idx].get(i);
+			if (!checked[next]) {
+				cntAns++;
+				isConnected(next);
+			}
+		}
 	}
+	
+//	static boolean isConnected_ () {
+//		int cnt=1;
+//		Queue<Integer> q=new ArrayDeque<>();
+//		Arrays.fill(checked, false);
+//		
+//		q.add(1);
+//		
+//		while (!q.isEmpty()) {
+//			int now=q.poll();
+//			checked[now]=true;
+//			
+//			for (int i=0; i<adj[now].size(); i++) {
+//				int next=adj[now].get(i);
+//				if (!checked[next]) {
+//					q.add(next);
+//					cnt++;
+//				}
+//			}
+//		}
+//		if (cnt!=K) return false;
+//		return true;
+//	}
 	
 	static boolean isInRange (int y, int x) {
 		if (y>=0 && x>=0 && y<N && x<M) return true;

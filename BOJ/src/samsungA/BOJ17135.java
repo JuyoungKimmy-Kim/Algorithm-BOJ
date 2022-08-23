@@ -19,7 +19,7 @@ class ENEMY {
 		this.no=no;
 		this.y=this.sy=y;
 		this.x=this.sx=x;
-		alive=true;
+		this.alive=true;
 	}
 } 
 

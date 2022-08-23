@@ -1,20 +1,25 @@
-package dynamicprogramming;
+package samsungA;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class BOJ1103 {
+class RCS {
+	int r,c,s;
 
-	static final int dy[]= {0,0,1,-1};
-	static final int dx[]= {1,-1,0,0};
-	
-	static int N, M;
-	static int [][] map;
-	static int [][]dp;
-	static boolean[][] visited;
+	RCS (int r, int c, int s) {
+		this.r=r;
+		this.c=c;
+		this.s=s;
+	}
+}
+
+public class BOJ17406 {
+
+	static int N,M,K;
+	static int[][] map;
+	static RCS[] rcs;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in));
@@ -22,26 +27,28 @@ public class BOJ1103 {
 		
 		N=Integer.parseInt(st.nextToken());
 		M=Integer.parseInt(st.nextToken());
+		K=Integer.parseInt(st.nextToken());
+		
+		rcs=new RCS[K];
 		
 		map=new int[N][M];
-		for (int i=0; i<N; i++)
-			Arrays.fill(dp[i], -1);
-		visited=new boolean[N][N];
-		
 		for (int i=0; i<N; i++) {
 			st=new StringTokenizer (br.readLine());
 			for (int j=0; j<M; j++) {
 				map[i][j]=Integer.parseInt(st.nextToken());
-				if (map[i][j]=='A'+7) map[i][j]=0;
 			}
+		}
+		
+		for (int i=0; i<K; i++) {
+			st=new StringTokenizer (br.readLine());
+			int r=Integer.parseInt(st.nextToken());
+			int c=Integer.parseInt(st.nextToken());
+			int s=Integer.parseInt(st.nextToken());
 		}
 	}
 	
-//	private static int dfs (int y, int x) {
-//		if (y<0 || x<0|| y>=N || x>=N) return -1;
-//		if (dp[y][x]!=-1) return dp[y][x];
-//		
-//		//visited[y][x]
-//	}
+	static void perm () {
+		
+	}
 
 }
