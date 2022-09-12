@@ -10,6 +10,12 @@ import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
+/*
+ * #1. Map을 입력받을 때, 2로 입력 받는 부분 (바이러스를 놓을 수 있는 칸)을 따로 저장해두고 바로 0으로 바꾸어 준다
+ * #2. 바이러스를 놓을 수 있는 칸 중 M개를 선택해서 바이러스를 놓는다 (combination)
+ * #3. bfs로 바이러스를 퍼뜨리며 최소 시간을 찾음
+ * 
+ */
 public class BOJ17141 {
 
 	static final int EMPTY=0, WALL=1, VIRUS=2;
@@ -117,8 +123,6 @@ public class BOJ17141 {
 			}
 		}
 		
-//		print();
-//		System.out.println(total-M+" "+cnt);
 		
 		if (total-M==cnt) {
 			ans=Math.min(latest, ans);
