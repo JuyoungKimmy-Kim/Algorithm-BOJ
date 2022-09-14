@@ -14,9 +14,11 @@ public class BOJ1103 {
 	static final int dy[]= {0,0,1,-1};
 	static final int dx[]= {1,-1,0,0};
 	
-	static int N, M;
+	static boolean done;
+	static int N, M, ans;
 	static char [][] map;
 	static int[][] dp;
+	static boolean[][] visited;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in));
@@ -25,10 +27,10 @@ public class BOJ1103 {
 		N=Integer.parseInt(st.nextToken());
 		M=Integer.parseInt(st.nextToken());
 		
+		visited=new boolean[N][M];
 		dp=new int[N][M];
-		for (int i=0; i<N; i++)
+		for (int i=0; i<N; i++) 
 			Arrays.fill(dp[i], -1);
-		
 
 		map=new char[N][];
 		
@@ -36,42 +38,37 @@ public class BOJ1103 {
 			String line=br.readLine();
 			map[i]=line.toCharArray();
 		}
-		System.out.println(bfs());
-		
+
+		dfs (0,0,1);
+		if (done) ans=-1;
+		System.out.println(ans);
 	}
-//	private static int bfs () {
-//		Queue<int[] >q=new ArrayDeque<> ();
-//		q.add(new int[] {0,0});
-//		dp[0][0]=1;
-//		
-//		int cnt=1;
-//		while (!q.isEmpty()) {
-//			int y=q.peek()[0];
-//			int x=q.poll()[1];
-//			int s=map[y][x]-'0';
-//			
-//			boolean flag=false;
-//			for (int d=0; d<4; d++) {
-//				int ny=y+dy[d]*s;
-//				int nx=x+dx[d]*s;
-//				
-//				if (ny<0 || nx<0 || ny>=N || nx>=M || map[ny][nx]=='H') continue;
-//				
-//				if (dp[ny][nx]!=-1 && dp[ny][nx]-'0'<=s)
-//					flag=true;
-//				
-//				if (dp[ny][nx]==-1) {
-//					dp[ny][nx]=dp[y][x]+1;
-//					q.add(new int[] {ny, nx});
-//					cnt=dp[ny][nx];
-//				}
-//			}
-//			if (flag) return -1;
-//		}
-//		
-//		print();
-//		return cnt;
-//	}
+	
+	private static void dfs (int y, int x, int cnt) {
+		
+		if (cnt>ans) 
+			ans=cnt;
+		
+		dp[y][x]=cnt;
+		
+		for (int d=0; d<4; d++) {
+			int ny=y+dy[d]*(map[y][x]-'0');
+			int nx=x+dx[d]*(map[y][x]-'0');
+			
+			if (ny<0 || nx<0 || ny>=N || nx>=M || map[ny][nx]=='H') continue;
+			
+			if (visited[ny][nx]) {
+				done=true;
+				return ;
+			}
+			
+			if (dp[ny][nx]>cnt)continue;
+			
+			visited[ny][nx]=true;
+			dfs (ny, nx, cnt+1);
+			visited[ny][nx]=false;
+		}
+	}
 	
 
 
