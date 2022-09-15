@@ -29,8 +29,8 @@ public class BOJ1103 {
 		
 		visited=new boolean[N][M];
 		dp=new int[N][M];
-		for (int i=0; i<N; i++) 
-			Arrays.fill(dp[i], -1);
+//		for (int i=0; i<N; i++) 
+//			Arrays.fill(dp[i], -1);
 
 		map=new char[N][];
 		
@@ -40,6 +40,8 @@ public class BOJ1103 {
 		}
 
 		dfs (0,0,1);
+		
+		
 		if (done) ans=-1;
 		System.out.println(ans);
 	}
@@ -50,6 +52,8 @@ public class BOJ1103 {
 			ans=cnt;
 		
 		dp[y][x]=cnt;
+		
+		print();
 		
 		for (int d=0; d<4; d++) {
 			int ny=y+dy[d]*(map[y][x]-'0');
@@ -73,13 +77,25 @@ public class BOJ1103 {
 
 
 	private static void print () {
-		System.out.println("===============================");
+		System.out.println("===============dp===============");
 		for (int i=0; i<N; i++) {
 			for (int j=0; j<M; j++) {
 				System.out.printf("%3d", dp[i][j]);
 			}
 			System.out.println();
 		}
+		System.out.println();
+		
+		System.out.println("===============map===============");
+		for (int i=0; i<N; i++) {
+			for (int j=0; j<M; j++) {
+				System.out.printf("%3c", map[i][j]);
+			}
+			System.out.println();
+		}
+		
+		System.out.println();
+		System.out.println();
 	}
 
 

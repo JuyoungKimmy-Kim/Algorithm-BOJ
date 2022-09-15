@@ -25,8 +25,6 @@ public class BOJ1113 {
 				pool[i][j]=line.charAt(j)-'0';
 			}
 		}
-
-		
 	}
 
 }

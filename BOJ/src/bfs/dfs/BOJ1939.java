@@ -44,7 +44,7 @@ public class BOJ1939 {
 		start=Integer.parseInt(st.nextToken());
 		end=Integer.parseInt(st.nextToken());
 	
-		int left=0, right=1_000_000_000;
+		int left=1, right=1_000_000_000;
 		while (left<=right) {
 			int mid=(left+right)/2;
 
