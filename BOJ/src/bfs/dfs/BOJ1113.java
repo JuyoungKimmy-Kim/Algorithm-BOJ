@@ -8,7 +8,9 @@ import java.util.StringTokenizer;
 public class BOJ1113 {
 
 	static int N,M;
-	static int[][] pool;
+	static int[][] pool, add;
+	static boolean[][] visited;
+	
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in));
@@ -25,6 +27,10 @@ public class BOJ1113 {
 				pool[i][j]=line.charAt(j)-'0';
 			}
 		}
+		
+		
+		
+		
 	}
 
 }
