@@ -12,11 +12,9 @@ public class BOJ1600 {
 	static final int EMPTY=0;
 	static final int WALL=1;
 
-	// 일반 사방 탐색
 	static final int dy[] = {0,1,0,-1};
 	static final int dx[] = {1,0,-1,0};
 	
-	// 말처럼 움직이는 탐색
 	static final int hdy[] = {-2,-1,1,2,2,1,-1,-2};
 	static final int hdx[] = {1,2,2,1,-1,-2,-2,-1};
 	
@@ -62,7 +60,6 @@ public class BOJ1600 {
 				ans=Math.min(ans, totalCnt);
 			}
 			
-			// 말 모양으로 움직일 수 있는 경우
 			if (horseCnt<K) {
 				for (int d=0; d<8; d++) {
 					int ny=y+hdy[d];
