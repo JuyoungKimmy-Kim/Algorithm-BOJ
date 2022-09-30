@@ -19,7 +19,7 @@ public class BOJ1600 {
 	static final int hdx[] = {1,2,2,1,-1,-2,-2,-1};
 	
 	static int K,W,H;
-	static int[][] map, dist;
+	static int[][] map;
 	static boolean[][][] visited;	
 		
 	public static void main(String[] args) throws IOException {

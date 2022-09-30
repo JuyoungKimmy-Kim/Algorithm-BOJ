@@ -43,7 +43,7 @@ public class BOJ17070 {
 		}
 		
 		// (1,1), (1,2) 좌표에 ㅡ(1번 모양) 으로 초기값 
-		// y,x 는 좌측 하단 좌표 기준
+		// y,x 는 우측 하단 좌표 기준
 		dfs (1,2,1);
 		System.out.println(ans);
 	}
