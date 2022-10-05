@@ -13,9 +13,9 @@ public class BOJ2239 {
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in));
 		map=new int[9][9];
 		for (int i=0; i<9; i++) {
-			String line=br.readLine();
+			char[] line=br.readLine().toCharArray();
 			for (int j=0; j<9; j++) {
-				map[i][j]=line.charAt(j)-'0';
+				map[i][j]=line[j]-'0';
 			}
 		}
 		dfs (0,0);
