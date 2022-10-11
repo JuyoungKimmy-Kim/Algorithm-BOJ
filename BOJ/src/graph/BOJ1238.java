@@ -16,7 +16,7 @@ public class BOJ1238 {
 	static int N,M,X, ans, max;
 	static List<Edge> adj[];
 	static boolean[] visited;
-	static int[] dist;
+	static int[] dist, ret;
 	static PriorityQueue<Edge> pq;
 	
 	public static void main(String[] args) throws IOException {
@@ -33,6 +33,9 @@ public class BOJ1238 {
 		for (int i=0; i<=N; i++)
 			adj[i]=new ArrayList<>();
 		
+		dist=new int[N+1];
+		ret=new int[N+1];
+		
 		
 		for (int i=0; i<M; i++) {
 			st=new StringTokenizer (br.readLine());
@@ -40,58 +43,56 @@ public class BOJ1238 {
 			int to=Integer.parseInt(st.nextToken());
 			int dist=Integer.parseInt(st.nextToken());
 			
-			adj[from].add(new Edge (from, to, dist));	
+			adj[from].add(new Edge (to, dist));
 		}
 		
-		for (int i=0; i<N; i++) {
-			int ret=dijkstra (i);
-			if (max<ret) {
-				max=ret;
-				ans=i;
-			}
+		for (int i=1; i<=N; i++) {
+			Arrays.fill(dist, INF);
+			
+			dijkstra(i);
+			ret[i]=dist[X];
 		}
+		
+		Arrays.fill(dist, INF);
+		dijkstra(X);
+		
+		for (int i=1; i<=N; i++)
+			ret[i]+=dist[i];
+		
+		Arrays.sort(ret);
+		
+		System.out.println(ret[N]);
+		
+
 	}
 	
-	static int dijkstra (int n) {
-		
-		dist=new int[N];
-		Arrays.fill(dist, INF);
-		pq=new PriorityQueue<>( (Edge e1, Edge e2 ) -> e1.d-e2.d);
-		
-		for (int i=0; i<adj[n].size(); i++) 
-			pq.add(adj[n].get(i));
-
-		dist[n]=0;
+	static void dijkstra (int start) {
+		PriorityQueue<Edge> pq=new PriorityQueue<>( (Edge e1, Edge e2) -> e1.d-e2.d );
+		pq.add(new Edge (start, 0));
+		dist[start]=0;
 		
 		while (!pq.isEmpty()) {
 			Edge edge=pq.poll();
-			int u=edge.u;
-			int v=edge.v;
-			int d=edge.d;
+			int cur=edge.v;
+			int curDist=edge.d;
 			
-			
-			for (int i=0; i<adj[v].size(); i++) {
-				if (dist[v]==INF) {
-					dist[v]=dist[u]+d;
-					
-					for (int k=0; k<adj[v].size(); k++)
-						pq.offer(adj[v].get(k));
-					
-				} else if (dist[v]>dist[u]+d) {
-					dist[v]=dist[u]+d;		
+			for (int i=0; i<adj[cur].size(); i++) {
+				int next=adj[cur].get(i).v;
+				int nextDist=adj[cur].get(i).d;
+				
+				if (dist[next]>curDist+nextDist) {
+					dist[next]=curDist+nextDist;
+					pq.add(new Edge (next, dist[next]));
 				}
 			}
 		}
-		
-		return -1;
 	}
 	
 	static class Edge {
-		int u, v;
+		int v;
 		int d;
 		
-		Edge (int u, int v, int d) {
-			this.u=u;
+		Edge (int v,  int d) {
 			this.v=v;
 			this.d=d;
 		}

@@ -15,7 +15,7 @@ public class BOJ17472 {
 	static final int dy[]= {0,0,1,-1};
 	static final int dx[]= {1,-1,0,0};
 	
-	static int N,M,K, ans, cntAns=1;
+	static int N,M,K, ans, cntAns=1, V;
 	static int [][] map;
 	static boolean[][] visited;
 	
@@ -45,15 +45,15 @@ public class BOJ17472 {
 		}
 		
 		go();
-		if (cntAns!=K) ans=-1;
-		System.out.println(ans);
+		if (V==K-1) System.out.println(ans);
+		else System.out.println(-1);
 	}
 	
 	static void go () {
 		
 		// #1. 각 섬에 numbering 
 		for (int i=0; i<N; i++) {
-			for (int j=0; j<N; j++) {
+			for (int j=0; j<M; j++) {
 				if (map[i][j]==1 && !visited[i][j]) {
 					numbering(++K, i,j);
 				}
@@ -71,18 +71,21 @@ public class BOJ17472 {
 		
 		
 		for (int i=0; i<N; i++) {
-			for (int j=0; j<N; j++) {
+			for (int j=0; j<M; j++) {
 				if (map[i][j]==0) continue;
 				makeBridge (map[i][j], i,j);
 			}
 		}
 		checked=new boolean[K+1];
 		
+		
+		if (bridge.size()==0) return ;
 		// #3. mst
 		Collections.sort(bridge, (Bridge b1, Bridge b2) -> b1.dist-b2.dist);
 			
 		mst();
-		isConnected(1);
+		//isConnected(1);
+
 				
 	}
 	
@@ -112,26 +115,13 @@ public class BOJ17472 {
 			int u=bridge.get(i).from;
 			int v=bridge.get(i).to;
 			
-			if (union(u,v))
+			if (union(u,v)) {
 				ans+=dist;
+				V++;
+			}
 		}	
 	}
-	
-	static void isConnected (int idx) {
-		
-		if (cntAns==K) return;
-		
-		checked[idx]=true;
-		
-		for (int i=0; i<adj[idx].size(); i++) {
-			int next=adj[idx].get(i);
-			if (!checked[next]) {
-				cntAns++;
-				isConnected(next);
-			}
-		}
-	}
-	
+
 	
 	static void makeBridge (int from, int y, int x) {
 		
@@ -150,8 +140,7 @@ public class BOJ17472 {
 			
 			int to=map[ny][nx]; 				//연결된 다른 섬의 번호
 			bridge.add(new Bridge (from,to,cnt));
-			
-			
+	
 		}
 	}
 
