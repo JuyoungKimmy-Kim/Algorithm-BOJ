@@ -47,8 +47,6 @@ public class BOJ2565 {
 			}
 		}
 	
-//		for (int i=0; i<N; i++)
-//			System.out.println(dp[i]);
 		System.out.println(N-max);
 		
 	}
